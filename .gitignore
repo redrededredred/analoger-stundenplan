@@ -1,0 +1,12 @@
+/bin/
+/include/
+/lib/
+/lib64/
+/pyvenv.cfg
+/.idea/.gitignore
+/.idea/analoger-stundenplan.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
+
