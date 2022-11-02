@@ -9,4 +9,5 @@ import sys
 def auth():
     login = input("Login: ")
     password = input("Secret: ")
-    return {"MAIL": login, "SCHUELERCODE": password}
+    return f"MAIL={login}&SCHUELERCODE={password}"
+
