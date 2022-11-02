@@ -9,5 +9,5 @@ import sys
 def auth():
     login = input("Login: ")
     password = input("Secret: ")
-    return f"MAIL={login}&SCHUELERCODE={password}"
+    return {"MAIL": login, "SCHUELERCODE": password, "formAction": "login", "formName": "stacks_in_368_page1"}
 
