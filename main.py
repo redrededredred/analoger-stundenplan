@@ -1,3 +1,5 @@
+import time
+
 import bs4
 import requests
 from bs4 import BeautifulSoup
@@ -16,20 +18,26 @@ class VirtStundenplan:
         # Login with auth data and return response as html
         with requests.Session() as session:
             # Authenticate the session
-            # TODO check if authentication is successful and break/retry otherwise
             session.post(self.login_url, self.auth_data, allow_redirects=True)
             # Get raw_html
             raw_html = session.get(self.data_url).text
-        return raw_html
+            if "Digitaler Ausweis" in raw_html:
+                return raw_html
+            else:
+                return False
 
     def get(self):
         raw_html = self.scrape()
-        # Use bs4 to work with the html and extract important data
-        soup = bs4.BeautifulSoup(raw_html, "html.parser")
-        data = []
-        for item in soup.find(id="editableTable"):
-            data.append(item.text)
-        return data
+        # Check if login succeeded
+        if raw_html:
+            # Use bs4 to work with the html and extract important data
+            soup = bs4.BeautifulSoup(raw_html, "html.parser")
+            data = []
+            for item in soup.find(id="editableTable"):
+                data.append(item.text)
+            return data
+        else:
+            return "Login unsuccessful!"
 
 
 if __name__ == "__main__":
