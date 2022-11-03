@@ -1,5 +1,4 @@
-import time
-
+from datetime import datetime
 import bs4
 import requests
 from bs4 import BeautifulSoup
@@ -12,7 +11,8 @@ class VirtStundenplan:
     def __init__(self, auth_data):
         self.auth_data = auth_data
         self.login_url = "https://www.virtueller-stundenplan.org/index.php" # POST here
-        self.data_url = "https://virtueller-stundenplan.org/page2/index.php" # GET data here
+        schoolday = datetime.now().strftime("%d.%m.%Y") # Current date or the url
+        self.data_url = "https://www.virtueller-stundenplan.org/page2/index.php?KlaBuDatum=" + schoolday # GET data here
 
     def scrape(self):
         # Login with auth data and return response as html
