@@ -39,13 +39,31 @@ class VirtStundenplan:
             data = []
             for item in soup.find(class_="tab-content"):
                 data.append(item.text)
-            return data
+            # clean up date and store in an dictionary
+
+            teachers = data[1].strip()
+            subjects = data[4].strip()
+            rooms = data[7].strip()
+            tests = data[10].strip()
+            
+            clean_data = {
+                "date": teachers[4:6] + " " + teachers[6:11], # Date is identical in each data-array from above
+                "teachers":teachers, 
+                "subjects":subjects,
+                "rooms":rooms,
+                "tests":tests, # Requires special check lenght is dynamic
+            }
+            
+            
+
+            return clean_data
+        # TODO: Move this check to scrape function
         else:
             return "Login unsuccessful!"
 
 
 if __name__ == "__main__":
-    Vs = VirtStundenplan(AUTH, for_date="11.11.2022")
+    Vs = VirtStundenplan(AUTH, for_date="12.11.2022")
     print(Vs.get())
 else:
     print("Do not use me like that!")
