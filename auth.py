@@ -8,6 +8,6 @@ import sys
 
 def auth():
     login = input("Login: ")
-    password = input("Secret: ")
+    password = getpass.getpass()
     return {"MAIL": login, "SCHUELERCODE": password, "formAction": "login", "formName": "stacks_in_368_page1"}
 

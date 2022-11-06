@@ -10,3 +10,4 @@
 /.idea/vcs.xml
 /lib64/
 /.idea/dbnavigator.xml
+__pycache__/

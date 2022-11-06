@@ -8,11 +8,15 @@ AUTH = auth()
 
 
 class VirtStundenplan:
-    def __init__(self, auth_data):
+    def __init__(self, auth_data, for_date="01.01.1970"):
         self.auth_data = auth_data
         self.login_url = "https://www.virtueller-stundenplan.org/index.php" # POST here
         schoolday = datetime.now().strftime("%d.%m.%Y") # Current date or the url
-        self.data_url = "https://www.virtueller-stundenplan.org/page2/index.php?KlaBuDatum=" + schoolday # GET data here
+        if for_date == "01.01.1970":
+            self.data_url = "https://www.virtueller-stundenplan.org/page2/index.php?KlaBuDatum=" + schoolday # GET data here
+        else:
+            self.data_url = "https://www.virtueller-stundenplan.org/page2/index.php?KlaBuDatum=" + for_date # GET data here
+        
 
     def scrape(self):
         # Login with auth data and return response as html
@@ -33,7 +37,7 @@ class VirtStundenplan:
             # Use bs4 to work with the html and extract important data
             soup = bs4.BeautifulSoup(raw_html, "html.parser")
             data = []
-            for item in soup.find(id="editableTable"):
+            for item in soup.find(class_="tab-content"):
                 data.append(item.text)
             return data
         else:
@@ -41,7 +45,7 @@ class VirtStundenplan:
 
 
 if __name__ == "__main__":
-    Vs = VirtStundenplan(AUTH)
+    Vs = VirtStundenplan(AUTH, for_date="11.11.2022")
     print(Vs.get())
 else:
     print("Do not use me like that!")
